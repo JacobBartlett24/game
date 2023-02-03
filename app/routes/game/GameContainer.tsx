@@ -5,9 +5,15 @@ interface GameContainerRouteProps {
   props: any;
 }
 
+interface Image {
+  url: string;
+}
+
 export default function GameContainerRoute({ props }: GameContainerRouteProps) {
 
   const [image, setImage]: any = useState();
+
+  console.log(props.data)
 
   return (
     <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} >
@@ -15,8 +21,13 @@ export default function GameContainerRoute({ props }: GameContainerRouteProps) {
         <Heading padding={0} w={"100%"}>
         </Heading>
       </CardHeader>
-      <CardBody w={"100%"} padding={0}>
-        <Image src={props.data[0].url} />
+      <CardBody w={"100%"} display={"grid"} gridTemplateColumns={"250px 250px"} gridTemplateRows={"250px 250px"} padding={0}>
+        {props.data.map((image: Image) => {
+          return (
+            <Image key={image.url} src={image.url} w={"250px"} h={"250px"} borderRadius={"15px"} />
+          )
+        }
+        )}
       </CardBody>
       <CardFooter>
       </CardFooter>
