@@ -1,18 +1,22 @@
-import { Heading, Text, Card, CardBody, CardFooter, CardHeader, Box } from "@chakra-ui/react";
+import { Heading, Text, Card, CardBody, CardFooter, CardHeader, Box, Image } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-export default function GameContainerRoute() {
+interface GameContainerRouteProps {
+  props: any;
+}
+
+export default function GameContainerRoute({ props }: GameContainerRouteProps) {
+
+  const [image, setImage]: any = useState();
+
   return (
-
     <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} >
       <CardHeader borderBottom={"1px solid black"} padding={0}>
         <Heading padding={0} w={"100%"}>
-          Game
         </Heading>
       </CardHeader>
       <CardBody w={"100%"} padding={0}>
-        <Text>
-          Game
-        </Text>
+        <Image src={props.data[0].url} />
       </CardBody>
       <CardFooter>
       </CardFooter>
