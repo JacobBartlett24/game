@@ -1,3 +1,4 @@
+
 import { Box, Card, EnvironmentProvider, Grid } from "@chakra-ui/react";
 import GameContainerRoute from "./GameContainer";
 import UserList from "./UserList";
@@ -20,7 +21,7 @@ export async function loader(args: LoaderArgs) {
   const openai = new OpenAIApi(configuration);
 
   const imageParameters = {
-    prompt: "cute baby sitting on a chair",
+    prompt: "Jacob Bartlett",
     n: 4,
   }
   const response = await openai.createImage(imageParameters);
