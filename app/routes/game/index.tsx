@@ -1,9 +1,9 @@
 
-import { Box, Card, EnvironmentProvider, Grid } from "@chakra-ui/react";
-import GameContainerRoute from "./GameContainer";
-import UserList from "./UserList";
-import { json, LoaderArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Box, Card, EnvironmentProvider, Grid, Button, Textarea } from "@chakra-ui/react";
+import GameContainerRoute from "../../components/GameContainer";
+import UserList from "../../components/UserList";
+import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
+import { Form, useLoaderData, useActionData } from "@remix-run/react";
 import { OpenAIApi, Configuration } from "openai";
 
 interface AiImages {
@@ -12,7 +12,14 @@ interface AiImages {
   }[];
 }
 
-export async function loader(args: LoaderArgs) {
+//export async function loader(args: LoaderArgs) {
+//return json(await)
+//}
+
+export async function action({ request }: ActionArgs) {
+
+  const body = await request.formData();
+  const promptEntry = body.get("prompt");
 
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_API_KEY,
@@ -21,17 +28,18 @@ export async function loader(args: LoaderArgs) {
   const openai = new OpenAIApi(configuration);
 
   const imageParameters = {
-    prompt: "Jacob Bartlett",
+    prompt: promptEntry?.toString() || "A photo of a cat",
     n: 4,
   }
+
   const response = await openai.createImage(imageParameters);
 
-  return json(response.data)
+  return json(response.data);
 }
 
 export default function IndexGameRoute() {
 
-  const data = useLoaderData<typeof loader>();
+  const data = useActionData<typeof action>();
 
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
