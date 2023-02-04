@@ -5,6 +5,8 @@ import UserList from "../../components/UserList";
 import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
 import { Form, useLoaderData, useActionData } from "@remix-run/react";
 import { OpenAIApi, Configuration } from "openai";
+import { db } from "~/utils/db.server";
+
 import styles from "~/styles/index.css";
 
 
@@ -18,9 +20,11 @@ export const links = () => {
   return [{ rel: "stylesheet", href: styles }];
 };
 
-//export async function loader(args: LoaderArgs) {
-//return json(await)
-//}
+export async function loader(args: LoaderArgs) {
+  return json({
+    wordList: await db.word.findMany(),
+  })
+}
 
 export async function action({ request }: ActionArgs) {
 
@@ -46,12 +50,15 @@ export async function action({ request }: ActionArgs) {
 export default function IndexGameRoute() {
 
   const data = useActionData<typeof action>();
+  const wordData = useLoaderData<typeof loader>();
+
+  const randomWord = wordData.wordList[Math.floor(Math.random() * wordData.wordList.length)].word;
 
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
       <Grid w={"100%"} h={"100vh"} gridTemplateRows={"100%"} gridTemplateColumns={"15rem 70rem"} justifyContent={"center"} columnGap={"10rem"} alignContent={"center"} bgColor={"brand.900"} padding={"5rem 0 5rem 0"}>
         <UserList />
-        <GameContainerRoute props={data} />
+        <GameContainerRoute props={data} randomWord={randomWord} />
       </Grid>
     </Box>
   );

@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 
 interface GameContainerRouteProps {
   props: any;
+  randomWord: string;
 }
 
 interface Image {
   url: string;
 }
 
-export default function GameContainerRoute({ props }: GameContainerRouteProps) {
+export default function GameContainerRoute({ props, randomWord }: GameContainerRouteProps) {
 
   const transition = useTransition();
   const text =
@@ -20,9 +21,10 @@ export default function GameContainerRoute({ props }: GameContainerRouteProps) {
 
 
   return (
-    <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} >
+    <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} padding={"1rem"}>
       <CardHeader borderBottom={"1px solid black"} padding={0}>
         <Heading padding={0} w={"100%"}>
+          {randomWord}
         </Heading>
       </CardHeader>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -32,13 +34,15 @@ export default function GameContainerRoute({ props }: GameContainerRouteProps) {
               <Image key={image.url} src={image.url} w={"250px"} h={"250px"} borderRadius={"15px"} />
             )
           }
-          ) : <Text>{text}</Text>}
+          ) : <Text alignSelf={"center"} justifySelf={"center"} gridColumnStart={"1"} gridColumnEnd={"3"} gridRowStart={"1"} gridRowEnd={"3"}>{text}</Text>}
         </CardBody>
       </Box>
-      <CardFooter w={"100%"} padding={"0rem 4rem"}>
+      <CardFooter w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <Form method="post" action="">
-          <Textarea name={"prompt"} colorScheme={"whiteAlpha"} variant={"filled"} placeholder={"Enter your prompt here"} />
-          <Button type={"submit"} variant={"solid"}>Submit Prompt</Button>
+          <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"} resize={"none"} >
+            <Textarea name={"prompt"} colorScheme={"whiteAlpha"} variant={"filled"} placeholder={"Enter your prompt here"} marginBottom={"1rem"} size={"lg"} />
+            <Button type={"submit"} variant={"solid"}>Submit Prompt</Button>
+          </Box>
         </Form>
       </CardFooter>
     </Card>
