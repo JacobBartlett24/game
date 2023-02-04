@@ -1,7 +1,7 @@
 // root.tsx
 import React, { useContext, useEffect } from 'react'
 import { withEmotionCache } from '@emotion/react'
-import { ChakraProvider, extendTheme, theme } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme, Heading, theme } from '@chakra-ui/react'
 import {
   Links,
   LiveReload,
@@ -16,11 +16,15 @@ import { ServerStyleContext, ClientStyleContext } from './context'
 
 const colors = {
   brand: {
-    900: '#bbd0ff',
+    900: '#45CAFF',
     800: '#b8c0ff',
-    700: '#c8b6ff',
+    700: '#FF5555',
     600: '#e7c6ff',
-    500: '#ffd6ff',
+    500: '#A5FF9D',
+  },
+  fonts: {
+    heading: "Lilita One",
+    body: "Lilita One",
   },
 }
 
@@ -82,6 +86,7 @@ const Document = withEmotionCache(
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
+          <Links />
         </body>
       </html>
     );

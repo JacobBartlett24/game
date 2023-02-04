@@ -5,12 +5,18 @@ import UserList from "../../components/UserList";
 import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
 import { Form, useLoaderData, useActionData } from "@remix-run/react";
 import { OpenAIApi, Configuration } from "openai";
+import styles from "~/styles/index.css";
+
 
 interface AiImages {
   data: {
     url: string;
   }[];
 }
+
+export const links = () => {
+  return [{ rel: "stylesheet", href: styles }];
+};
 
 //export async function loader(args: LoaderArgs) {
 //return json(await)

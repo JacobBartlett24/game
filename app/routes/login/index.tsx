@@ -2,6 +2,7 @@ import { Card, CardBody, CardFooter, CardHeader, Button, Input, Text } from "@ch
 import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
 
+
 export default function LoginIndexRoute() {
 
   const navigate = useNavigate();
@@ -17,13 +18,12 @@ export default function LoginIndexRoute() {
     localStorage.setItem("name", name);
   }
 
-
   return (
     <div>
       <form action="post">
         <Card w={"20vw"} bgColor={"brand.500"} display={"flex"} alignItems={"center"}>
           <CardHeader >
-            <Text>
+            <Text fontSize={"2xl"}>
               Pick Your Name
             </Text>
           </CardHeader>
@@ -31,7 +31,7 @@ export default function LoginIndexRoute() {
             <Input placeholder={"Name"} border={"1px solid black"} onChange={handleNameChange} />
           </CardBody>
           <CardFooter>
-            <Button type="button" onClick={handleContinue} bgColor={"brand.700"} border={"1px solid black"}>
+            <Button type="button" onClick={handleContinue} bgColor={"brand.700"}>
               Continue
             </Button>
           </CardFooter>
