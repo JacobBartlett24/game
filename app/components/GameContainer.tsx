@@ -1,17 +1,19 @@
 import { Heading, Text, Card, CardBody, CardFooter, CardHeader, Box, Image, Textarea, Button } from "@chakra-ui/react";
 import { Form, useTransition } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import type { Word } from "@prisma/client";
+import type ghostWord from "~/routes/game";
 
 interface GameContainerRouteProps {
   props: any;
-  randomWord: string;
+  wordData: any;
 }
 
 interface Image {
   url: string;
 }
 
-export default function GameContainerRoute({ props, randomWord }: GameContainerRouteProps) {
+export default function GameContainerRoute({ props, wordData }: GameContainerRouteProps) {
 
   const transition = useTransition();
   const text =
@@ -19,12 +21,24 @@ export default function GameContainerRoute({ props, randomWord }: GameContainerR
       transition.state === "submitting" ? "Loading..." :
         transition.state === "loading" ? "Loading..." : null;
 
+  const [randomWord, setRandomWord] = useState<Word>();
+  const [randomWordArray, setRandomWordArray] = useState<string[]>([]);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * wordData.wordList.length);
+    setRandomWord(wordData.wordList[randomIndex]);
+    setRandomWordArray(wordData.wordList[randomIndex].word.split(""));
+  }, [wordData.wordList]);
 
   return (
     <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} padding={"1rem"}>
       <CardHeader borderBottom={"1px solid black"} padding={0}>
-        <Heading padding={0} w={"100%"}>
-          {randomWord}
+        <Heading padding={0} w={"100%"} display={"flex"}>
+          {randomWordArray.map((letter: string) => {
+            return (
+              <Text key={letter} marginLeft={"3px"}>_</Text>
+            )
+          })}
         </Heading>
       </CardHeader>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -34,7 +48,10 @@ export default function GameContainerRoute({ props, randomWord }: GameContainerR
               <Image key={image.url} src={image.url} w={"250px"} h={"250px"} borderRadius={"15px"} />
             )
           }
-          ) : <Text alignSelf={"center"} justifySelf={"center"} gridColumnStart={"1"} gridColumnEnd={"3"} gridRowStart={"1"} gridRowEnd={"3"}>{text}</Text>}
+          ) : <Text alignSelf={"center"} justifySelf={"center"} gridColumnStart={"1"} gridColumnEnd={"3"} gridRowStart={"1"} gridRowEnd={"3"}>
+            {text}
+            {`, your word is ${randomWord?.word}`}
+          </Text>}
         </CardBody>
       </Box>
       <CardFooter w={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
