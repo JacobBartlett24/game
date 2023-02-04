@@ -32,10 +32,33 @@ export async function loader(args: LoaderArgs) {
   })
 }
 
+function validatePromptLength(prompt: string) {
+  if (prompt.length > 0) {
+    return true;
+  }
+  return false;
+}
+
+function validatePromptContainsRandomWord(prompt?: string, randomWord?: string) {
+  if (randomWord && prompt?.includes(randomWord.toLowerCase())) {
+    return true;
+  }
+  console.log("random word", randomWord);
+  return false;
+}
+
 export async function action({ request }: ActionArgs) {
 
   const body = await request.formData();
   const promptEntry = body.get("prompt");
+
+  const formErrors = {
+    prompt: validatePromptContainsRandomWord(promptEntry?.toString(), body.get("randomWord")?.toString())
+  }
+
+  if (Object.values(formErrors).some((hasError) => hasError)) {
+    return json({ formErrors }, { status: 400 });
+  }
 
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_API_KEY,

@@ -1,4 +1,4 @@
-import { Heading, Text, Card, CardBody, CardFooter, CardHeader, Box, Image, Textarea, Button } from "@chakra-ui/react";
+import { Heading, Text, Card, CardBody, CardFooter, CardHeader, Box, Image, Textarea, Button, Input } from "@chakra-ui/react";
 import { Form, useTransition } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import type { Word } from "@prisma/client";
@@ -34,11 +34,11 @@ export default function GameContainerRoute({ props, wordData }: GameContainerRou
     <Card display={"flex"} justifyContent={"center"} alignItems={"center"} w={"60vw"} h={"100%"} bgColor={"brand.500"} padding={"1rem"}>
       <CardHeader borderBottom={"1px solid black"} padding={0}>
         <Heading padding={0} w={"100%"} display={"flex"}>
-          {randomWordArray.map((letter: string) => {
+          {randomWordArray ? randomWordArray.map((letter: string) => {
             return (
               <Text key={letter} marginLeft={"3px"}>_</Text>
             )
-          })}
+          }) : "incorrect"}
         </Heading>
       </CardHeader>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -59,6 +59,7 @@ export default function GameContainerRoute({ props, wordData }: GameContainerRou
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"} resize={"none"} >
             <Textarea name={"prompt"} colorScheme={"whiteAlpha"} variant={"filled"} placeholder={"Enter your prompt here"} marginBottom={"1rem"} size={"lg"} />
             <Button type={"submit"} variant={"solid"}>Submit Prompt</Button>
+            <Input name={"randomWord"} value={randomWord?.word} hidden />
           </Box>
         </Form>
       </CardFooter>
