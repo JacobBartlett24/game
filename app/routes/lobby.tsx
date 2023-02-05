@@ -1,5 +1,6 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Heading } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from "@chakra-ui/react";
 import { Outlet, useNavigate } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import styles from "~/styles/index.css";
 
 export const links = () => {
@@ -9,7 +10,14 @@ export const links = () => {
 export default function LobbyRoute() {
 
   const navigate = useNavigate();
+  const [user, setUser] = useState<string>("");
 
+  useEffect(() => {
+    const user = localStorage.getItem("name");
+    if (user) {
+      setUser(user);
+    }
+  }, [])
 
   return (
     <Box display={"flex"} w={"100%"} h={"100vh"} bgColor={"brand.900"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -20,15 +28,7 @@ export default function LobbyRoute() {
           </Heading>
         </CardHeader>
         <CardBody display={"grid"}>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
-          <div>user</div>
+          <Text>{user}</Text>
         </CardBody>
         <CardFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Button bgColor={"brand.700"} onClick={() => navigate("/game")}>
