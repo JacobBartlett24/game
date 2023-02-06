@@ -17,7 +17,7 @@ export default function LobbyRoute() {
     if (user) {
       setUser(user);
     }
-  }, [])
+  })
 
   return (
     <Box display={"flex"} w={"100%"} h={"100vh"} bgColor={"brand.900"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -32,7 +32,7 @@ export default function LobbyRoute() {
         </CardBody>
         <CardFooter display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Button bgColor={"brand.700"} onClick={() => navigate("/game")}>
-            Start Game 😄
+            Start Game
           </Button>
         </CardFooter>
       </Card>
