@@ -9,8 +9,6 @@ interface GameContainerRouteProps {
   wordData: any;
 }
 
-
-
 export default function GameContainerRoute({ props, wordData }: GameContainerRouteProps) {
 
   const transition = useTransition();
